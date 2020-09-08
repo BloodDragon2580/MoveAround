@@ -6,7 +6,7 @@ PPBM.SetPoint = function() end
 PPBM:SetMovable(true)
 PPBM:SetUserPlaced(true)
 PPBM:SetClampedToScreen(true)
-PPBM:SetHeight(550)
+PPBM:SetHeight(100)
 PPBM:SetWidth(190)
 
 local MovePlayerPowerBarAltMover = CreateFrame("Frame", nil, PPBM)  
