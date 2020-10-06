@@ -4,6 +4,9 @@
 ## Author: BloodDragon2580
 ## Notes: With this Addon you can move many Frames.
 
+Fix\lib.xml
+Fix.lua
+
 Module\A\AudioOptionsFrame.lua
 Module\A\AuctionHouseFrame.lua
 Module\A\AzeriteEmpoweredItemUI.lua
