@@ -1,15 +1,15 @@
 local addonName
-addonName, StrataFix = ...
-local addon = StrataFix 
+addonName, Fix = ...
+local addon = Fix 
 
 local frame = CreateFrame("Button", addonName.."HiddenFrame", UIParent)
 local revision = tonumber(("$Revision: 51 $"):match("%d+"))
 
 -- New fixing code in library
 if LibStub then
-  addon.lib = LibStub("LibStrataFix") -- force dep
+  addon.lib = LibStub("Fix") -- force dep
 else
-  addon.lib = LibStrataFix or {}
+  addon.lib = Fix or {}
 end
 
 local function chatMsg(msg)
@@ -40,6 +40,9 @@ addon.blacklist = {
   ["GuildRankOrder"] = true,
   ["GuildRoster"] = true,
   ["UIParent"] = true,
+  ["SetUIPanel"] = true,
+  ["ShowUIPanel"] = true,
+  ["SetAttribute"] = true,
 }
 for i=1,10 do
   addon.blacklist["ChatFrame"..i.."EditBox"] = true
@@ -76,8 +79,8 @@ end
 -------------------------------------------------------------------
 -- Command line processing
 -------------------------------------------------------------------
-SLASH_STRATAFIX1 = "/stratafix"
-SlashCmdList["STRATAFIX"] = function(args)
+SLASH_Fix1 = "/Fix"
+SlashCmdList["Fix"] = function(args)
   local cmd, arg = strsplit(" ",args,2)
   cmd = cmd:lower()
   if cmd == "debug" then
@@ -112,7 +115,7 @@ SlashCmdList["STRATAFIX"] = function(args)
     chatMsg("Version info on load is now: "..(addon.settings.quiet and "disabled" or "enabled"))
   else
     chatMsg("Revision "..revision..", Library rev "..(addon.lib.version or "(old)"))
-    chatMsg("/stratafix options: ")
+    chatMsg("/Fix options: ")
     chatMsg("   debug : toggle addon debugging mode")
     chatMsg("   quiet : toggle version info on load")
     chatMsg("   force : force a global fix now (may break some addons!)")
@@ -185,7 +188,7 @@ end
 
 
 local upd = 0
-function StrataFix_OnUpdate(frame, elapsed)
+function Fix_OnUpdate(frame, elapsed)
   if InCombatLockdown() then return end
   upd = upd + elapsed
   if upd < 0.5 then 
@@ -196,10 +199,10 @@ function StrataFix_OnUpdate(frame, elapsed)
   addon:FixAll(not addon.debug)
 end
 
-function StrataFix_OnEvent(frame, event, name, ...)
+function Fix_OnEvent(frame, event, name, ...)
    if event == "ADDON_LOADED" and name == addonName then
-       StrataFixDB = StrataFixDB or {}
-       addon.settings = StrataFixDB
+       FixDB = FixDB or {}
+       addon.settings = FixDB
        addon:UpdateSettings()
        if not addon.settings.quiet then
          chatMsg("Revision "..revision.." loaded.")
@@ -207,7 +210,7 @@ function StrataFix_OnEvent(frame, event, name, ...)
 --[[       
    elseif event == "PLAYER_REGEN_ENABLED" then 
        -- This event is called when the player exits combat
-       frame:SetScript("OnUpdate", StrataFix_OnUpdate);
+       frame:SetScript("OnUpdate", Fix_OnUpdate);
    elseif event == "PLAYER_REGEN_DISABLED" then
        -- This event is called when we enter combat
        frame:SetScript("OnUpdate", nil);
@@ -216,11 +219,11 @@ function StrataFix_OnEvent(frame, event, name, ...)
 end
 
 
-frame:SetScript("OnEvent", StrataFix_OnEvent);
+frame:SetScript("OnEvent", Fix_OnEvent);
 frame:RegisterEvent("ADDON_LOADED")
 --[[
 if not InCombatLockdown() then
-  frame:SetScript("OnUpdate", StrataFix_OnUpdate);
+  frame:SetScript("OnUpdate", Fix_OnUpdate);
 end
 frame:RegisterEvent("PLAYER_REGEN_ENABLED")
 frame:RegisterEvent("PLAYER_REGEN_DISABLED")

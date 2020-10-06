@@ -15,9 +15,9 @@
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
 ## X-Curse-Packaged-Version: r35
-## X-Curse-Project-Name: LibStrataFix
-## X-Curse-Project-ID: libstratafix
-## X-Curse-Repository-ID: wow/libstratafix/mainline
+## X-Curse-Project-Name: Fix
+## X-Curse-Project-ID: Fix
+## X-Curse-Repository-ID: wow/Fix/mainline
 
 #@no-lib-strip@
 libs\LibStub\LibStub.lua

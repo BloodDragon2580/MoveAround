@@ -1,7 +1,7 @@
 --[[
 
 ****************************************************************************************
-LibStrataFix
+Fix
 
 Author: oscarucb
 
@@ -13,7 +13,7 @@ local _G = _G
 local UIParent, pairs, string, select, type = 
       UIParent, pairs, string, select, type
 
-local MAJOR, MINOR = "LibStrataFix", 10000+tonumber(string.match("$Revision: 34 $","%d+"))
+local MAJOR, MINOR = "Fix", 10000+tonumber(string.match("$Revision: 34 $","%d+"))
 local lib, oldminor
 if LibStub then
   lib, oldminor = LibStub:NewLibrary(MAJOR, MINOR)
@@ -21,7 +21,7 @@ else
   lib = {}
 end
 if not lib then return end
-_G["LibStrataFix"] = lib
+_G["Fix"] = lib
 
 lib.debug = false
 lib.version = MINOR
