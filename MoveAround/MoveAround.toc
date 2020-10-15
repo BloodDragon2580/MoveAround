@@ -1,6 +1,6 @@
 ## Interface: 90001
 ## Title: |cffd6266cMoveAround|r
-## Version: 3.2
+## Version: 3.3
 ## Author: BloodDragon2580
 ## Notes: With this Addon you can move many Frames.
 
@@ -16,7 +16,6 @@ Module\A\AzeriteRespecFrame.lua
 
 Module\B\BankFrame.lua
 Module\B\BlizzardAzeriteEssenceUI.lua
-Module\B\BarberShopFrame.lua
 Module\B\BlackMarketFrame.lua
 
 Module\C\CharacterFrame.lua
