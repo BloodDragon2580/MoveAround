@@ -2,7 +2,7 @@ With MoveAround you can move certain frames. e.g. the Quest Tracker, VehicleSeat
 
 You only have to press the Titel "Upper" area of the frame with the shift + left mouse button and then you can move the frame.
 
-![Vorschau](https://octodex.github.com/images/yaktocat.png) 
+![Vorschau](https://raw.githubusercontent.com/BloodDragon2580/MoveAround/master/MoveAroundLogo.jpg) 
  
 
 **To reset the positions in general, simply delete the following file:**
