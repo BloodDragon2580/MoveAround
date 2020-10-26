@@ -183,6 +183,8 @@ lib.hookTypes = {
   "ScrollFrame",
   "MessageFrame",
   "ScrollingMessageFrame",
+  "SetUIPanel",
+  "ShowUIPanel",
 }
 
 -- ensure we only hook once despite library upgrades
