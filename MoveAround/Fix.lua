@@ -43,6 +43,8 @@ addon.blacklist = {
   ["SetUIPanel"] = true,
   ["ShowUIPanel"] = true,
   ["SetAttribute"] = true,
+  ["UpdateUIPanelPositions"] = true,
+  ["GossipFrame_HandleShow"] = true,
 }
 for i=1,10 do
   addon.blacklist["ChatFrame"..i.."EditBox"] = true
