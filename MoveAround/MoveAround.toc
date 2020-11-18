@@ -1,6 +1,6 @@
-## Interface: 90001
+## Interface: 90002
 ## Title: |cffd6266cMoveAround|r
-## Version: 3.3
+## Version: 3.4
 ## Author: BloodDragon2580
 ## Notes: With this Addon you can move many Frames.
 
