@@ -8,3 +8,5 @@ You only have to press the Titel "Upper" area of the frame with the shift + left
 **To reset the positions in general, simply delete the following file:**
 
 **World of Warcraft \ _retail_ \ WTF \ Account \ YOUR ACCOUNT \ YOUR REALM \ YOUR CHAR \ layout-local.txt** 
+
+Download Count https://hanadigital.github.io/grev/?user=BloodDragon2580&repo=MoveAround
