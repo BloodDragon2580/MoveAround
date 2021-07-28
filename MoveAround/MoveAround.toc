@@ -4,6 +4,8 @@
 ## Author: BloodDragon2580
 ## Notes: With this Addon you can move many Frames.
 
+TaintLess.xml
+
 Module\A\AudioOptionsFrame.lua
 Module\A\AuctionHouseFrame.lua
 Module\A\AzeriteEmpoweredItemUI.lua
