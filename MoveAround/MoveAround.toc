@@ -1,6 +1,6 @@
-## Interface: 90205
+## Interface: 90207
 ## Title: |cffd6266cMoveAround|r
-## Version: 4.2
+## Version: 4.3
 ## Author: BloodDragon2580
 ## Notes: With this Addon you can move many Frames.
 
