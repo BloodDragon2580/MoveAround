@@ -1,12 +1,11 @@
-## Interface: 90207
+## Interface: 100000
 ## Title: |cffd6266cMoveAround|r
-## Version: 4.3
+## Version: 4.4
 ## Author: BloodDragon2580
 ## Notes: With this Addon you can move many Frames.
 
 TaintLess.xml
 
-Module\A\AudioOptionsFrame.lua
 Module\A\AuctionHouseFrame.lua
 Module\A\AzeriteEmpoweredItemUI.lua
 Module\A\AlliedRacesFrame.lua
@@ -44,7 +43,6 @@ Module\G\GuildBankFrame.lua
 
 Module\H\HelpFrame.lua
 
-Module\I\InterfaceOptionsFrame.lua
 Module\I\ItemTextFrame.lua
 Module\I\InspectFrame.lua
 Module\I\IslandsQueueFrame.lua
@@ -54,7 +52,6 @@ Module\I\ItemUpgradeFrame.lua
 
 Module\K\KeyBindingFrame.lua
 
-Module\L\LevelUpDisplay.lua
 Module\L\LootFrame.lua
 Module\L\LookingForGuildFrame.lua
 
@@ -93,7 +90,6 @@ Module\T\TalkingHeadFrame.lua
 Module\T\TradeSkillFrame.lua
 
 Module\V\VehicleSeatIndicator.lua
-Module\V\VideoOptionsFrame.lua
 Module\V\VoidStorageFrame.lua
 
 Module\W\WorldMapFrame.lua
