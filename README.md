@@ -1,5 +1,7 @@
 Added commands to hide the Lua errors.
+
 Use '/movearound' to stop showing the warning message.
+
 Use '/movearound show' to show the warning again
 
 With MoveAround you can move certain frames. e.g. the Quest Tracker, VehicleSeatIndicator or the PlayerPowerBarAlt.
