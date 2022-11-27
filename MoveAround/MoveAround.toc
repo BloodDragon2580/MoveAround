@@ -1,8 +1,11 @@
 ## Interface: 100002
 ## Title: |cffd6266cMoveAround|r
-## Version: 4.7
+## Version: 4.8
 ## Author: BloodDragon2580
 ## Notes: With this Addon you can move many Frames.
+## SavedVariables: MoveAround
+
+Module\NoTaint.lua
 
 Module\A\AuctionHouseFrame.lua
 Module\A\AzeriteEmpoweredItemUI.lua
