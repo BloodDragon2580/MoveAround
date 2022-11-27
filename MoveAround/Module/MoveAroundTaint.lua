@@ -1,38 +1,38 @@
-if not NoTaint_Proc_ResetActionButtonAction then
-    NoTaint_Proc_ResetActionButtonAction = 1
+if not MoveAroundTaint_Proc_ResetActionButtonAction then
+    MoveAroundTaint_Proc_ResetActionButtonAction = 1
 
     local TXT_WARNING_WINDOW = "Action Bars are tainted\n/reload is RECOMMENDED"
-    local TXT_WARNING_CHAT_MESSAGE = "|cffffff00MoveAround:|r Your action bars are tainted by [|cffffff00%s|r], reload UI to prevent further damage."
-    local TXT_NOTICE_DISABLE = "Use |cffffff00'/movearound'|r to stop showing the warning message."
-    local TXT_SLASH_SHOW = "|cffffff00MoveAround:|r Will show warnings again."
-    local TXT_SLASH_STOP = "|cffffff00MoveAround:|r Never show warnings for this account. use |cffffff00'/movearound show'|r to undo."
+    local TXT_WARNING_CHAT_MESSAGE = "|cffffff00MoveAroundTaint:|r Your action bars are tainted by [|cffffff00%s|r], reload UI to prevent further damage."
+    local TXT_NOTICE_DISABLE = "Use |cffffff00'/movearoundtaint'|r to stop showing the warning message."
+    local TXT_SLASH_SHOW = "|cffffff00MoveAroundTaint:|r Will show warnings again."
+    local TXT_SLASH_STOP = "|cffffff00MoveAroundTaint:|r Never show warnings for this account. use |cffffff00'/movearoundtaint show'|r to undo."
 
     if LOCALE_deDE then
         TXT_WARNING_WINDOW = "Aktionsleisten sind verboten\n/reload wird EMPFOHLEN"
-        TXT_WARNING_CHAT_MESSAGE = "|cffffff00MoveAround:|r Ihre Aktionsleisten sind von [|cffffff00%s|r] veboten, lade die Benutzeroberfläche neu, um weiteren Schaden zu verhindern."
-        TXT_NOTICE_DISABLE = "Verwende |cffffff00'/movearound'|r, um die Anzeige der Warnmeldung zu stoppen."
-        TXT_SLASH_SHOW = "|cffffff00MoveAround:|r Zeigt wieder Warnungen an."
-        TXT_SLASH_STOP = "|cffffff00MoveAround:|r Niemals Warnungen für diesen Charakter anzeigen. Verwende |cffffff00'/movearound show'|r, um dies rückgängig zu machen."
+        TXT_WARNING_CHAT_MESSAGE = "|cffffff00MoveAroundTaint:|r Ihre Aktionsleisten sind von [|cffffff00%s|r] veboten, lade die Benutzeroberfläche neu, um weiteren Schaden zu verhindern."
+        TXT_NOTICE_DISABLE = "Verwende |cffffff00'/movearoundtaint'|r, um die Anzeige der Warnmeldung zu stoppen."
+        TXT_SLASH_SHOW = "|cffffff00MoveAroundTaint:|r Zeigt wieder Warnungen an."
+        TXT_SLASH_STOP = "|cffffff00MoveAroundTaint:|r Niemals Warnungen für diesen Account anzeigen. Verwende |cffffff00'/movearoundtaint show'|r, um dies rückgängig zu machen."
     end
 
-    SLASH_MOVEAROUND1 = "/movearound"
-    SlashCmdList["MOVEAROUND"] = function(msg)
+    SLASH_MOVEAROUNDTAINT1 = "/movearoundtaint"
+    SlashCmdList["MOVEAROUNDTAINT"] = function(msg)
         if msg and msg:lower() == "show" then
             DEFAULT_CHAT_FRAME:AddMessage(TXT_SLASH_SHOW)
-            notaintstop = nil
-            if U1DBG then U1DBG.NT2S = nil end
+            movearoundtaintstop = nil
+            if U1DBG then U1DBG.MATS = nil end
         else
             DEFAULT_CHAT_FRAME:AddMessage(TXT_SLASH_STOP)
-            notaintstop = 1
-            if U1DBG then U1DBG.NT2S = 1 end
+            movearoundtaintstop = 1
+            if U1DBG then U1DBG.MATS = 1 end
         end
     end
 
     local last = 0
-    function NoTaint_ShowWarning(tainted_by)
+    function MoveAroundTaint_ShowWarning(tainted_by)
         if GetTime() - last > 300 then
             local show_warn = true
-            if U1DBG then show_warn = not U1DBG.NT2S else show_warn = not notaintstop end
+            if U1DBG then show_warn = not U1DBG.MATS else show_warn = not movearoundtaintstop end
             if show_warn then
                 DEFAULT_CHAT_FRAME:AddMessage(format(TXT_WARNING_CHAT_MESSAGE, tainted_by))
             end
@@ -44,30 +44,30 @@ if not NoTaint_Proc_ResetActionButtonAction then
         end
     end
 
-    function NoTaint_ResetActionButtonAction(self)
+    function MoveAroundTaint_ResetActionButtonAction(self)
         local ok, tainted_by = issecurevariable(self, "action")
         if not ok and not InCombatLockdown() then
             self.action=nil
             self:SetAttribute("_aby", "action")
-            if self:IsVisible() then NoTaint_ShowWarning(tainted_by) end
+            if self:IsVisible() then MoveAroundTaint_ShowWarning(tainted_by) end
         end
     end
 
     for _, v in ipairs(ActionBarButtonEventsFrame.frames) do
-        hooksecurefunc(v, "UpdateAction", NoTaint_ResetActionButtonAction)
+        hooksecurefunc(v, "UpdateAction", MoveAroundTaint_ResetActionButtonAction)
     end
 
     local f1 = CreateFrame("Frame")
     f1:RegisterEvent("PLAYER_REGEN_ENABLED")
     f1:SetScript("OnEvent", function(self, event, ...)
         for _, v in ipairs(ActionBarButtonEventsFrame.frames) do
-            NoTaint_ResetActionButtonAction(v)
+            MoveAroundTaint_ResetActionButtonAction(v)
         end
     end)
 end
 
-if not NoTaint_CleanStaticPopups then
-    function NoTaint_CleanStaticPopups()
+if not MoveAroundTaint_CleanStaticPopups then
+    function MoveAroundTaint_CleanStaticPopups()
         for index = 1, STATICPOPUP_NUMDIALOGS, 1 do
             local frame = _G["StaticPopup"..index];
             if not issecurevariable(frame, "which") then
@@ -83,7 +83,7 @@ if not NoTaint_CleanStaticPopups then
         end
     end
 
-    function NoTaint_CleanDropDownList()
+    function MoveAroundTaint_CleanDropDownList()
         local frameToShow = LFDQueueFrameTypeDropDown
         local parent = frameToShow:GetParent()
         frameToShow:SetParent(nil)
@@ -98,7 +98,7 @@ if not NoTaint_CleanStaticPopups then
         OBJECTIVE_TRACKER_UPDATE_REASON = 1,
     }
 
-    function NoTaint_CleanGlobal(self)
+    function MoveAroundTaint_CleanGlobal(self)
         for k, _ in pairs(global_obj_name) do
             if not issecurevariable(k) then
                 _G[k] = nil
@@ -120,13 +120,13 @@ if not NoTaint_CleanStaticPopups then
     end)
 
     hooksecurefunc(EditModeManagerFrame, "IsEditModeLocked", function()
-        NoTaint_CleanGlobal()
+        MoveAroundTaint_CleanGlobal()
     end)
 
     local function cleanAll()
-        NoTaint_CleanDropDownList()
-        NoTaint_CleanStaticPopups()
-        NoTaint_CleanGlobal()
+        MoveAroundTaint_CleanDropDownList()
+        MoveAroundTaint_CleanStaticPopups()
+        MoveAroundTaint_CleanGlobal()
     end
 
     local Origin_IsShown = EditModeManagerFrame.IsShown
@@ -141,8 +141,8 @@ if not NoTaint_CleanStaticPopups then
     GameMenuButtonEditMode:HookScript("PreClick", cleanAll)
 end
 
-if not NoTaint_Proc_StopEnterWorldLayout then
-    NoTaint_Proc_StopEnterWorldLayout = 1
+if not MoveAroundTaint_Proc_StopEnterWorldLayout then
+    MoveAroundTaint_Proc_StopEnterWorldLayout = 1
     local f2 = CreateFrame("Frame")
     f2:RegisterEvent("PLAYER_LEAVING_WORLD")
     f2:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -150,9 +150,9 @@ if not NoTaint_Proc_StopEnterWorldLayout then
         if event == "PLAYER_ENTERING_WORLD" then
             local login, reload = ...
             if not login and not reload then
-                NoTaint_CleanDropDownList()
-                NoTaint_CleanStaticPopups()
-                NoTaint_CleanGlobal()
+                MoveAroundTaint_CleanDropDownList()
+                MoveAroundTaint_CleanStaticPopups()
+                MoveAroundTaint_CleanGlobal()
             end
             EditModeManagerFrame:RegisterEvent("EDIT_MODE_LAYOUTS_UPDATED")
         elseif event == "PLAYER_LEAVING_WORLD" then
@@ -161,8 +161,8 @@ if not NoTaint_Proc_StopEnterWorldLayout then
     end)
 end
 
-if not NoTaint_Proc_CleanActionButtonFlyout then
-    NoTaint_Proc_CleanActionButtonFlyout = 1
+if not MoveAroundTaint_Proc_CleanActionButtonFlyout then
+    MoveAroundTaint_Proc_CleanActionButtonFlyout = 1
     local barsToUpdate = { MainMenuBar, MultiBarBottomLeft, MultiBarBottomRight, StanceBar, PetActionBar, PossessActionBar, MultiBarRight, MultiBarLeft, MultiBar5, MultiBar6, MultiBar7 }
     for _, bar in ipairs(barsToUpdate) do
         hooksecurefunc(bar, "UpdateSpellFlyoutDirection", function(self)
