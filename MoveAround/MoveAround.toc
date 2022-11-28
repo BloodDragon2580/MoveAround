@@ -1,9 +1,12 @@
 ## Interface: 100002
 ## Title: |cffd6266cMoveAround|r
-## Version: 5.0
+## Version: 5.1
 ## Author: BloodDragon2580
 ## Notes: With this Addon you can move many Frames.
 ## SavedVariables: movearoundtaintstop
+## SavedVariablesPerCharacter: movearoundtaintstop
+
+libs\TaintLess\TaintLess.xml
 
 Module\MoveAroundTaint.lua
 
