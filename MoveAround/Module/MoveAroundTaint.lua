@@ -28,6 +28,15 @@ if not MoveAroundTaint_Proc_ResetActionButtonAction then
         end
     end
 
+local f = CreateFrame("Frame")
+f:RegisterEvent("PLAYER_LOGIN")
+f:SetScript("OnEvent", function(f, event)
+    if event == "PLAYER_LOGIN" then
+      print("|cffd6266cMoveAround:|r Verwende |cffd6266c'/movearoundtaint'|r, um die Anzeige der Warnmeldung zu stoppen.")
+    end
+end)
+
+
     local last = 0
     function MoveAroundTaint_ShowWarning(tainted_by)
         if GetTime() - last > 300 then
