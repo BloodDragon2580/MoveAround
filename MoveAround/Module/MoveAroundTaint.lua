@@ -36,6 +36,14 @@ f:SetScript("OnEvent", function(f, event)
     end
 end)
 
+local Frame = CreateFrame("Frame")
+Frame:RegisterEvent("PLAYER_LOGIN")
+
+Frame:SetScript("OnEvent", function(...)
+
+SlashCmdList["MOVEAROUNDTAINT"]("/movearoundtaint")
+
+end)
 
     local last = 0
     function MoveAroundTaint_ShowWarning(tainted_by)
