@@ -226,6 +226,9 @@ local frames = {
 	["ObjectiveTrackerFrame"] = {
 		MoveAroundDisabledBy = "miscellaneousDisabled",
 	},
+	["VehicleSeatIndicator"] = {
+		MoveAroundDisabledBy = "miscellaneousDisabled",
+	},
 	["ReputationDetailFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
 	},
