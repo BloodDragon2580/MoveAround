@@ -223,12 +223,6 @@ local frames = {
 	["QuickJoinToastButton.Toast2"] = {
 		MoveAroundDisabledBy = "miscellaneousDisabled",
 	},
-	["ObjectiveTrackerFrame"] = {
-		MoveAroundDisabledBy = "miscellaneousDisabled",
-	},
-	["VehicleSeatIndicator"] = {
-		MoveAroundDisabledBy = "miscellaneousDisabled",
-	},
 	["ReputationDetailFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
 	},
@@ -534,6 +528,19 @@ local frames = {
 	},
 	["ContributionCollectionFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
+	},
+	["DurabilityFrame"] = {
+		DriftDisabledBy = "miscellaneousDisabled",
+	},
+	["VehicleSeatIndicator"] = {
+		DriftDisabledBy = "miscellaneousDisabled",
+	},
+	["GenericTraitFrame"] = {
+		DriftDisabledBy = "windowsDisabled",
+	},
+	["ObjectiveTrackerFrame"] = {
+		DriftDisabledBy = "miscellaneousDisabled",
+		DriftUnmovable = true
 	},
 }
 
