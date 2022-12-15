@@ -298,9 +298,6 @@ local frames = {
 	["TradeFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
 	},
-	["SUFWrapperFrame"] = {
-		MoveAroundDisabledBy = "windowsDisabled",
-	},
 	["TimeManagerFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
 	},
