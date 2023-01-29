@@ -530,23 +530,24 @@ local frames = {
 		DriftDisabledBy = "miscellaneousDisabled",
 	},
 	["VehicleSeatIndicator"] = {
-		DriftDisabledBy = "miscellaneousDisabled",
+		MoveAroundDisabledBy = "miscellaneousDisabled",
 	},
 	["GenericTraitFrame"] = {
-		DriftDisabledBy = "windowsDisabled",
+		MoveAroundDisabledBy = "windowsDisabled",
 	},
 	["ObjectiveTrackerFrame"] = {
-		DriftDisabledBy = "miscellaneousDisabled",
-		DriftUnmovable = true
+		MoveAroundDisabledBy = "miscellaneousDisabled",
+		MoveAroundUnmovable = true
+	},
+	["ProfessionsCustomerOrdersFrame"] = {
+		MoveAroundDisabledBy = "windowsDisabled",
 	},
 }
 
 local MoveAround = CreateFrame("Frame")
 
 local function eventHandler(self, event, ...)
-	if event == "ADDON_LOADED" then
-		MoveAroundHelpers:ModifyFrames(frames)
-	elseif event == "PLAYER_REGEN_ENABLED" then
+	if event == "ADDON_LOADED" or event == "PLAYER_REGEN_ENABLED" then
 		MoveAroundHelpers:ModifyFrames(frames)
 	elseif event == "VARIABLES_LOADED" then
 		MoveAroundHelpers:SetupConfig()
@@ -560,27 +561,9 @@ local function eventHandler(self, event, ...)
 
 		MoveAroundHelpers:ModifyFrames(frames)
 
-		MoveAround:RegisterEvent("PLAYER_TALENT_UPDATE")
-		MoveAround:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-		MoveAround:RegisterEvent("PET_SPECIALIZATION_CHANGED")
-
-		MoveAround:RegisterEvent("ITEM_LOCKED")
-		MoveAround:RegisterEvent("ITEM_DATA_LOAD_RESULT")
-
-		MoveAround:RegisterEvent("LFG_LIST_SEARCH_RESULTS_RECEIVED")
-		MoveAround:RegisterEvent("LFG_LIST_SEARCH_FAILED")
-		MoveAround:RegisterEvent("LFG_LIST_SEARCH_RESULT_UPDATED")
-
-		MoveAround:RegisterEvent("CLUB_FINDER_RECRUITMENT_POST_RETURNED")
-		MoveAround:RegisterEvent("CVAR_UPDATE")
-
-		MoveAround:RegisterEvent("TRADE_SKILL_LIST_UPDATE")
-
-		MoveAroundHelpers:Wait(1, MoveAround.RegisterEvent, MoveAround, "ADDON_LOADED")
+		MoveAround:RegisterEvent("ADDON_LOADED")
 
 		MoveAround:RegisterEvent("PLAYER_REGEN_ENABLED")
-	else
-		MoveAroundHelpers:BroadcastReset(frames)
 	end
 end
 

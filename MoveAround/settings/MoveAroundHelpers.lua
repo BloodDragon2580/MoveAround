@@ -715,46 +715,6 @@ function MoveAroundHelpers:HookFCF_DockUpdate(frames)
 	hasFixedManageFramePositions = true
 end
 
-function MoveAroundHelpers:Wait(delay, func, ...)
-	if type(delay) ~= "number" or type(func) ~= "function" then
-		return false
-	end
-
-	if MoveAroundHelpers.waitFrame == nil then
-		MoveAroundHelpers.waitFrame = CreateFrame("Frame", "WaitFrame", UIParent)
-		MoveAroundHelpers.waitFrame:SetScript(
-			"OnUpdate",
-			function(self, elapse)
-				local count = #MoveAroundHelpers.waitTable
-				local i = 1
-				while (i <= count) do
-					local waitRecord = tremove(MoveAroundHelpers.waitTable, i)
-					local d = tremove(waitRecord, 1)
-					local f = tremove(waitRecord, 1)
-					local p = tremove(waitRecord, 1)
-					if (d > elapse) then
-						tinsert(MoveAroundHelpers.waitTable, i, {d - elapse, f, p})
-						i = i + 1
-					else
-						count = count - 1
-						f(unpack(p))
-					end
-				end
-
-				for frameName, frame in pairs(MoveAroundHelpers.resetTable) do
-					if frame.MoveAroundResetNeeded then
-						resetScaleAndPosition(frame)
-						frame.MoveAroundResetNeeded = nil
-					end
-				end
-			end
-		)
-	end
-
-	tinsert(MoveAroundHelpers.waitTable, {delay, func, {...}})
-	return true
-end
-
 function MoveAroundHelpers:BroadcastReset(frames)
 	for frameName, _ in pairs(frames) do
 		local frame = getFrame(frameName)
