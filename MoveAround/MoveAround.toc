@@ -1,6 +1,6 @@
 ## Interface: 100007
 ## Title: |cffd6266cMoveAround|r
-## Version: 6.3
+## Version: 6.4
 ## Author: BloodDragon2580
 ## Notes: With this Addon you can move many Frames.
 ## SavedVariables: MoveAroundPoints, MoveAroundScales, MoveAroundOptions

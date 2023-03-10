@@ -286,9 +286,6 @@ local frames = {
 	["HelpFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
 	},
-	["HelpOpenWebTicketButton"] = {
-		MoveAroundDisabledBy = "buttonsDisabled",
-	},
 	["RaidParentFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
 	},
