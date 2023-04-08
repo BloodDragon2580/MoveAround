@@ -1,14 +1,16 @@
-## Interface: 100007
+## Interface: 100100
 ## Title: |cffd6266cMoveAround|r
-## Version: 6.4
+## Version: 6.5
 ## Author: BloodDragon2580
 ## Notes: With this Addon you can move many Frames.
-## SavedVariables: MoveAroundPoints, MoveAroundScales, MoveAroundOptions
+## SavedVariables: MoveAroundPoints, MoveAroundScales, MoveAroundOptions, MoveAroundSlider
 
 embeds.xml
 
 locale\locale.xml
+settings\CurrencySlider.xml
 
 settings\MoveAroundHelpers.lua
 settings\MoveAroundOptions.lua
+settings\CurrencySlider.lua
 MoveAround.lua
