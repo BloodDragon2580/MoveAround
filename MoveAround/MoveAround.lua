@@ -539,6 +539,12 @@ local frames = {
 	["ProfessionsCustomerOrdersFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
 	},
+	["QueueIcon"] = {
+		MoveAroundDisabledBy = "buttonsDisabled",
+	},
+	["QueueStatusButton"] = {
+		MoveAroundDisabledBy = "buttonsDisabled",
+	},
 }
 
 local MoveAround = CreateFrame("Frame")
