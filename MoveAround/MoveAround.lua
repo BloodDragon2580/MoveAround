@@ -539,6 +539,9 @@ local frames = {
 	["ProfessionsCustomerOrdersFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
 	},
+		["GuideFrame"] = {
+		MoveAroundDisabledBy = "windowsDisabled",
+	},
 	["QueueIcon"] = {
 		MoveAroundDisabledBy = "buttonsDisabled",
 	},
