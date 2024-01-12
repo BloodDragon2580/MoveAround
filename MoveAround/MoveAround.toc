@@ -1,6 +1,6 @@
-## Interface: 100200
+## Interface: 100205
 ## Title: |cffd6266cMoveAround|r
-## Version: 7.4
+## Version: 7.5
 ## Author: BloodDragon2580
 ## Notes: With this Addon you can move many Frames.
 ## IconTexture: Interface\AddOns\MoveAround\Media\Texture\logo
