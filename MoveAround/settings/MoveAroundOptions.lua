@@ -66,7 +66,14 @@ function MoveAroundHelpers:SetupConfig()
 	MoveAroundOptionsTitle:SetFontObject("GameFontNormalLarge")
 	MoveAroundOptionsTitle:SetText(L["MoveAround"])
 	MoveAroundOptionsTitle:SetPoint("TOPLEFT", MoveAroundOptionsPanel.optionspanel, "TOPLEFT", 15, -15)
-	InterfaceOptions_AddCategory(MoveAroundOptionsPanel.optionspanel)
+	--InterfaceOptions_AddCategory(MoveAroundOptionsPanel.optionspanel)
+	if InterfaceOptions_AddCategory then
+		InterfaceOptions_AddCategory(MoveAroundOptionsPanel.optionspanel)
+	else
+		local category, layout = Settings.RegisterCanvasLayoutCategory(MoveAroundOptionsPanel.optionspanel, MoveAroundOptionsPanel.optionspanel.name);
+		Settings.RegisterAddOnCategory(category);
+	end
+	self.optionsFrame = optionsFrame
 
 	local frameToggleTitle = MoveAroundOptionsPanel.optionspanel:CreateFontString(nil, "BACKGROUND")
 	frameToggleTitle:SetFontObject("GameFontNormal")
