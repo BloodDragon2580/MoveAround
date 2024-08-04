@@ -1,139 +1,171 @@
-MoveAroundSlider = MoveAroundSlider or {}
+MoveAroundSlider = {}
 
-local ListChanged = false
+local ParentHeaders = {}
 
-CurrencySlider = {}
-
-local function Update_MoveAroundSlider(numTokenTypes,currencyInfo)
-	local HeaderOrdering = {}
-	local CurrentHead = currencyInfo[1].name
-	for i=1, #MoveAroundSlider do
-		HeaderOrdering[MoveAroundSlider[i].name] = i
-	end
-	for i = 1, numTokenTypes do
-		local name, isHeader = currencyInfo[i].name, currencyInfo[i].isHeader
-		if isHeader then
-			if CurrentHead ~= name then
-				MoveAroundSlider[HeaderOrdering[CurrentHead]].stop = i - 1
-				HeaderOrdering[CurrentHead] = nil
-			end
-			CurrentHead = name
-			if not HeaderOrdering[CurrentHead] then
-				HeaderOrdering[CurrentHead] = #MoveAroundSlider + 1
-			end
-			MoveAroundSlider[HeaderOrdering[CurrentHead]] = {name = name, start = i}
+local function Storeheaders(data, lastheader)
+	local SavedHeaders = CurrencySave.headers
+	if data.currencyListDepth == 0 then
+		if not SavedHeaders[data.name] then
+			SavedHeaders[data.name] = {
+				subheaders = {},
+				numheaders = 0,
+				order = {},
+				pos = #CurrencySave.order + 1
+			}
+			CurrencySave.numheaders = CurrencySave.numheaders + 1
+			tinsert(CurrencySave.order, data.name)
 		end
-		if i == numTokenTypes then
-			MoveAroundSlider[HeaderOrdering[CurrentHead]].stop = i
-			HeaderOrdering[CurrentHead] = nil
+	else
+		ParentHeaders[data.name] = lastheader
+		if not SavedHeaders[lastheader].subheaders[data.name] then
+			SavedHeaders[lastheader].subheaders[data.name] = {
+				pos = #SavedHeaders[lastheader].order + 1
+			}
+			tinsert(SavedHeaders[lastheader].order,data.name)
 		end
 	end
-	for _, v in pairs(HeaderOrdering) do
-		tremove(MoveAroundSlider,v)
-	end
-end
-
-local function FirstTimeSetup(numTokenTypes)
-	local Cat = 1
-	local Headers = 0
-	for i = 1, numTokenTypes do
-		local currencyInfo = C_CurrencyInfo.GetCurrencyListInfo(i)
-		if currencyInfo.isHeader then
-			Headers = Headers + 1
-			if MoveAroundSlider[Cat] and not ( i == MoveAroundSlider[Cat].start) then
-				MoveAroundSlider[Cat].stop = i - 1
-				Cat = Cat + 1
-			end
-			local Category = {}
-			Category.name = currencyInfo.name
-			Category.start = i
-			MoveAroundSlider[Cat] = Category
-		end
-		if i == numTokenTypes then
-			MoveAroundSlider[Cat].stop = i
-		end
-	end
-	MoveAroundSlider.Firsttime = true
-	MoveAroundSlider.NumCat = Headers
-	ListChanged = false
 end
 
 
 local function BuildList(numTokenTypes)
-	if numTokenTypes == 0 then
-		return
+	if numTokenTypes == 0 then --in theory to a "loaded to early" check
+		return --nope the way all our of here!
 	end
-	local Headers = 0
+	local lastheader
+	local lastsubheader
+	local headers = {}
 	local currencyInfo = {}
-	if not(MoveAroundSlider.Firsttime) then
-		FirstTimeSetup(numTokenTypes)
-	else
-		for i = 1,  numTokenTypes do
-			currencyInfo[i] = C_CurrencyInfo.GetCurrencyListInfo(i)
-			if currencyInfo[i].isHeader then
-				Headers = Headers + 1
+
+	for i = 1,  numTokenTypes do
+		local data =  C_CurrencyInfo.GetCurrencyListInfo(i)
+		if data then
+			data.currencyIndex = i
+			if data.isHeader then
+				Storeheaders(data, lastheader)
+				if data.currencyListDepth == 0 then
+					if lastheader then
+						headers[lastheader].last = i-1
+					end
+					lastheader = data.name
+					headers[data.name] = {
+						start = i,
+					}
+					if lastsubheader then
+						headers[lastsubheader].last = i-1
+					end
+					lastsubheader = nil
+				elseif data.currencyListDepth == 1 then
+					if lastsubheader then
+						headers[lastsubheader].last = i-1
+					end
+					lastsubheader = data.name
+					headers[data.name] = {
+						start = i
+					}
+				end
+
+			end
+			currencyInfo[i] = data
+		end
+	end
+	headers[lastheader].last = numTokenTypes
+
+	local modcurrencyInfo = {}
+	for _,v in ipairs(CurrencySave.order) do
+		if headers[v] then
+			if headers[v].start ~= headers[v].last and #CurrencySave.headers[v].order ~= 0 then
+				local Subhead = CurrencySave.headers[v].subheaders
+				tinsert(modcurrencyInfo,currencyInfo[headers[v].start])
+				for _, sh in ipairs(CurrencySave.headers[v].order) do
+					for i = headers[sh].start, headers[sh].last do
+						tinsert(modcurrencyInfo,currencyInfo[i])
+					end
+				end
+			else
+				for i = headers[v].start, headers[v].last do
+					tinsert(modcurrencyInfo,currencyInfo[i])
+				end
 			end
 		end
-		ListChanged = ListChanged or MoveAroundSlider.NumCat ~= Headers or MoveAroundSlider.Nummax ~= numTokenTypes
 	end
+	return modcurrencyInfo
+end
 
-	MoveAroundSlider.Nummax = numTokenTypes
-	MoveAroundSlider.NumCat = Headers
-
-	if ListChanged then
-		Update_MoveAroundSlider(numTokenTypes,currencyInfo)
-		ListChanged = false
-	end
-
-	local Pos = 1
-	local IndexList = {}
-	for i = 1, #MoveAroundSlider do
-		for I = MoveAroundSlider[i].start, MoveAroundSlider[i].stop do
-			IndexList[Pos] = {index = I}
-			Pos = Pos + 1
+local function CreateArrowButtons()
+	for i, frame in pairs(TokenFrame.ScrollBox:GetFrames()) do
+		if not(frame.SortUpArrow) then
+			CreateFrame("Button", nil, frame ,"SortUpArrowTemplate", i)
+			CreateFrame("Button", nil, frame ,"SortDownArrowTemplate", i)
+			frame:HookScript("OnEnter", function (self)
+				if self.elementData.isHeader then
+					self.SortUpArrow:Show()
+					self.SortDownArrow:Show()
+				end
+			end)
+			frame:HookScript("OnLeave", function (self)
+				self.SortUpArrow:Hide()
+				self.SortDownArrow:Hide()
+			end)
 		end
 	end
-	return IndexList
 end
+
 local function Mod_TokenFrame_Update(resetScrollPosition)
 	local numTokenTypes = C_CurrencyInfo.GetCurrencyListSize();
-	if CharacterFrameTab3:IsVisible() then
-		local newDataProvider = CreateDataProvider(BuildList(numTokenTypes));
-		CharacterFrame.TokenFrame.ScrollBox:SetDataProvider(newDataProvider, not resetScrollPosition and ScrollBoxConstants.RetainScrollPosition);
-	end
+	local newDataProvider = CreateDataProvider(BuildList(numTokenTypes));
+	CharacterFrame.TokenFrame.ScrollBox:SetDataProvider(newDataProvider, not resetScrollPosition and ScrollBoxConstants.RetainScrollPosition);
+	CreateArrowButtons()
 end
 
-function CurrencySlider.MoveUp(frame)
-	ListChanged = true
-	for i = 1, #MoveAroundSlider do
-		if MoveAroundSlider[i].name == frame:GetParent().Name:GetText() and i ~= 1 then
-			local Temp = MoveAroundSlider[i]
-			tremove(MoveAroundSlider,i)
-			tinsert(MoveAroundSlider, i - 1, Temp)
-			Mod_TokenFrame_Update()
-			break
-		end
+function MoveAroundSlider.MoveUp(frame)
+	local name = frame:GetParent().elementData.name
+	local PH = ParentHeaders[name]
+	if PH then
+		local pos = CurrencySave.headers[PH].subheaders[name].pos
+		if pos == 1 then return end
+		local ParentHeader = CurrencySave.headers[PH]
+		ParentHeader.subheaders[name].pos  = pos - 1
+		tremove(ParentHeader.order,pos)
+		tinsert(ParentHeader.order, pos - 1, name)
+		ParentHeader.subheaders[ParentHeader.order[pos]].pos = pos
+	else
+		local pos = CurrencySave.headers[name].pos
+		if pos == 1 then return end
+		CurrencySave.headers[name].pos  = pos - 1
+		tremove(CurrencySave.order,pos)
+		tinsert(CurrencySave.order, pos - 1, name)
+		CurrencySave.headers[CurrencySave.order[pos]].pos = pos
 	end
+	Mod_TokenFrame_Update()
 end
 
-function CurrencySlider.MoveDown(frame)
-	ListChanged = true
-	for i = 1, #MoveAroundSlider do
-		if MoveAroundSlider[i].name == frame:GetParent().Name:GetText() and i ~= #MoveAroundSlider then
-			local Temp = MoveAroundSlider[i]
-			tremove(MoveAroundSlider,i)
-			tinsert(MoveAroundSlider, i + 1, Temp)
-			Mod_TokenFrame_Update()
-			break
-		end
+function MoveAroundSlider.MoveDown(frame)
+	local name = frame:GetParent().elementData.name
+	local PH = ParentHeaders[name]
+	if PH then
+		local ParentHeader = CurrencySave.headers[PH]
+		local pos = CurrencySave.headers[PH].subheaders[name].pos
+		if pos == #ParentHeader.order then return end
+		ParentHeader.subheaders[name].pos  = pos + 1
+		tremove(ParentHeader.order,pos)
+		tinsert(ParentHeader.order, pos + 1, name)
+		ParentHeader.subheaders[ParentHeader.order[pos]].pos = pos
+	else
+		local pos = CurrencySave.headers[name].pos
+		if pos == #CurrencySave.order then return end
+		CurrencySave.headers[name].pos = pos + 1
+		tremove(CurrencySave.order,pos)
+		tinsert(CurrencySave.order, pos + 1, name)
+		CurrencySave.headers[CurrencySave.order[pos]].pos = pos
 	end
+	Mod_TokenFrame_Update()
 end
 
 local function CreateResetButton()
 	local Button = CreateFrame("Button","$parentRevertButton",TokenFrame)
 	Button:SetHeight(22)
 	Button:SetWidth(22)
-	Button:SetPoint("TOPRIGHT",TokenFrame,"TOPRIGHT",-8,-40)
+	Button:SetPoint("RIGHT",TokenFrame.CurrencyTransferLogToggleButton,"LEFT",-5)
 	Button:SetNormalTexture("Interface\\Buttons\\UI-SpellbookIcon-PrevPage-Up")
 	Button:SetPushedTexture("Interface\\Buttons\\UI-SpellbookIcon-PrevPage-Down");
 	Button:SetDisabledTexture("Interface\\Buttons\\UI-SpellbookIcon-PrevPage-Disabled");
@@ -147,47 +179,28 @@ local function CreateResetButton()
 		GameTooltip:Hide()
 	end)
 	Button:SetScript("OnClick", function()
-	MoveAroundSlider={}
+	CurrencySave = {headers = {}, numheaders = 0, order = {}}
 	Mod_TokenFrame_Update()
 	end	)
 end
 
 
-local ButtonsCreated = false
-local function CreateArrowButtons()
 
-	if ButtonsCreated then return end
-	for i, frame in pairs(TokenFrame.ScrollBox:GetFrames()) do
-		CreateFrame("Button", nil, frame ,"SortUpArrowTemplate", i)
-		CreateFrame("Button", nil, frame ,"SortDownArrowTemplate", i)
-		frame:HookScript("OnEnter", function (self)
-			if self.isHeader then
-				self.SortUpArrow:Show()
-				self.SortDownArrow:Show()
-			end
-		end)
-		frame:HookScript("OnLeave", function (self)
-			self.SortUpArrow:Hide()
-			self.SortDownArrow:Hide()
-		end)
-	end
-	ButtonsCreated = true
-end
 
 
 local eventFrame = CreateFrame("FRAME")
 
 local function Load()
-	hooksecurefunc("TokenFrame_Update", Mod_TokenFrame_Update)
-	TokenFrame:HookScript("OnShow",CreateArrowButtons)
+	hooksecurefunc(TokenFrame,"Update", Mod_TokenFrame_Update)
 	CreateResetButton()
 	eventFrame:UnregisterEvent("ADDON_LOADED")
 end
 
 eventFrame:SetScript("OnEvent", function(_,event, name)
 	if event == "ADDON_LOADED" then
-		if name =="MoveAround" then
-			if IsAddOnLoaded("Blizzard_TokenUI") then
+		if name =="MoveAroundSlider" then
+			CurrencySave = CurrencySave or {headers = {}, numheaders = 0,order = {}}
+			if C_AddOns.IsAddOnLoaded("Blizzard_TokenUI") then
 				Load()
 			end
 		elseif name == "Blizzard_TokenUI" then

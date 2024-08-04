@@ -2,7 +2,7 @@
 	<Button name="SortUpArrowTemplate" parentKey="SortUpArrow" hidden="true" virtual="true">
 		<Size x="20" y="10"/>
 		<Anchors>
-			<Anchor point="TOPRIGHT" x="-20" y="-3"/>
+			<Anchor point="LEFT" relativeKey="$parent" relativePoint="RIGHT" x="-60"/>
 		</Anchors>
 		<Layers>
 			<Layer level="BACKGROUND">
@@ -25,7 +25,7 @@
 				end
 			</OnLeave>
 			<OnClick>
-				CurrencySlider.MoveUp(self)
+				CurrencySorter.MoveUp(self)
 				self:Hide()
 				self:GetParent().SortDownArrow:Hide();
 			</OnClick>
@@ -57,7 +57,7 @@
 				end
 			</OnLeave>
 			<OnClick>
-				CurrencySlider.MoveDown(self)
+				CurrencySorter.MoveDown(self)
 				self:Hide()
 				self:GetParent().SortUpArrow:Hide();
 			</OnClick>
