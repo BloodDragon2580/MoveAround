@@ -1,17 +1,15 @@
 ## Interface: 110002
 ## Title: |cffd6266cMoveAround|r
-## Version: 8.2
+## Version: 8.3
 ## Author: BloodDragon2580
 ## Notes: With this Addon you can move many Frames.
 ## IconTexture: Interface\AddOns\MoveAround\Media\Texture\logo
-## SavedVariables: MoveAroundPoints, MoveAroundScales, MoveAroundOptions, MoveAroundSlider
+## SavedVariables: MoveAroundPoints, MoveAroundScales, MoveAroundOptions
 
 embeds.xml
 
 locale\locale.xml
-settings\CurrencySlider.xml
 
 settings\MoveAroundHelpers.lua
 settings\MoveAroundOptions.lua
-settings\CurrencySlider.lua
 MoveAround.lua

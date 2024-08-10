@@ -102,20 +102,15 @@ local frames = {
 	},
 	["CharacterFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
-		MoveAroundTabs = {
-			"CharacterFrameTab1",
-			"CharacterFrameTab2",
-			"CharacterFrameTab3"
-		}
 	},
 	["GearManagerPopupFrame"] = {
-		DriftDisabledBy = "windowsDisabled",
+		MoveAroundDisabledBy = "windowsDisabled",
 	},
 	["TokenFramePopup"] = {
-		DriftDisabledBy = "windowsDisabled",
+		MoveAroundDisabledBy = "windowsDisabled",
 	},
 	["TradeSkillFrame"] = {
-		DriftDisabledBy = "windowsDisabled",
+		MoveAroundDisabledBy = "windowsDisabled",
 	},
 	["TradeSkillFrame.OptionalReagentList"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
@@ -149,22 +144,18 @@ local frames = {
 	},
 	["CollectionsJournal"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
-		MoveAroundDelegate = "CollectionsJournalMover"
+		MoveAroundDelegate = "CollectionsJournalMover",
+		MoveAroundHasMover = true,
 	},
 	["CommunitiesFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
 		MoveAroundDelegate = "CommunitiesMover",
-		MoveAroundTabs = {
-			"CommunitiesFrame.MaximizeMinimizeFrame.MaximizeButton",
-			"CommunitiesFrame.MaximizeMinimizeFrame.MinimizeButton",
-			"CommunitiesFrame.ChatTab",
-			"CommunitiesFrame.RosterTab",
-			"CommunitiesFrame.GuildBenefitsTab",
-			"CommunitiesFrame.GuildInfoTab",
-			"ClubFinderCommunityAndGuildFinderFrame.ClubFinderPendingTab",
-		}
+		MoveAroundHasMover = true,
 	},
 	["CommunitiesFrame.GuildMemberDetailFrame"] = {
+		MoveAroundDisabledBy = "windowsDisabled",
+	},
+	["CommunitiesGuildLogFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
 	},
 	["SpellBookFrame"] = {
@@ -196,14 +187,6 @@ local frames = {
 	},
 	["PVEFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
-		MoveAroundTabs = {
-			"PVEFrameTab1",
-			"PVEFrameTab2",
-			"PVEFrameTab3",
-			"PVPQueueFrameCategoryButton1",
-			"PVPQueueFrameCategoryButton2",
-			"PVPQueueFrameCategoryButton3"
-		}
 	},
 	["EncounterJournal"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
@@ -237,11 +220,6 @@ local frames = {
 	},
 	["DressUpFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
-		MoveAroundTabs = {
-			"DressUpFrame.ToggleOutfitDetailsButton",
-			"DressUpFrame.MaximizeMinimizeFrame.MinimizeButton",
-			"DressUpFrame.MaximizeMinimizeFrame.MaximizeButton"
-		}
 	},
 	["SideDressUpFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
@@ -285,6 +263,9 @@ local frames = {
 	},
 	["HelpFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
+	},
+	["HelpOpenWebTicketButton"] = {
+		MoveAroundDisabledBy = "buttonsDisabled",
 	},
 	["RaidParentFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
@@ -380,16 +361,16 @@ local frames = {
 		MoveAroundDisabledBy = "windowsDisabled",
 	},
 	["ReforgingFrame"] = {
-		DriftDisabledBy = "windowsDisabled",
+		MoveAroundDisabledBy = "windowsDisabled",
 	},
 	["ExpansionLandingPage"] = {
-		DriftDisabledBy = "windowsDisabled",
+		MoveAroundDisabledBy = "windowsDisabled",
 	},
 	["MajorFactionRenownFrame"] = {
-		DriftDisabledBy = "windowsDisabled",
+		MoveAroundDisabledBy = "windowsDisabled",
 	},
 	["GarrisonBuildingFrame"] = {
-		DriftDisabledBy = "windowsDisabled",
+		MoveAroundDisabledBy = "windowsDisabled",
 	},
 	["GarrisonLandingPage"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
@@ -524,30 +505,27 @@ local frames = {
 		MoveAroundDisabledBy = "windowsDisabled",
 	},
 	["DurabilityFrame"] = {
-		DriftDisabledBy = "miscellaneousDisabled",
-	},
-	["VehicleSeatIndicator"] = {
 		MoveAroundDisabledBy = "miscellaneousDisabled",
 	},
 	["GenericTraitFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
 	},
 	["ObjectiveTrackerFrame"] = {
-		MoveAroundDisabledBy = "miscellaneousDisabled",
+		MoveAroundDisabledBy = "objectivesDisabled",
 		MoveAroundUnmovable = true
 	},
 	["ProfessionsCustomerOrdersFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
 	},
-		["GuideFrame"] = {
+	["GuideFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
 	},
-	["QueueIcon"] = {
-		MoveAroundDisabledBy = "buttonsDisabled",
+	["ProfessionsBookFrame"] = {
+		MoveAroundDisabledBy = "windowsDisabled",
 	},
-	["QueueStatusButton"] = {
-		MoveAroundDisabledBy = "buttonsDisabled",
-	},
+	["PlayerSpellsFrame"] = {
+		MoveAroundDisabledBy = "windowsDisabled",
+	}
 }
 
 local MoveAround = CreateFrame("Frame")
