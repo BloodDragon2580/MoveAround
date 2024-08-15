@@ -350,7 +350,7 @@ function MoveAroundHelpers:PrintHelp()
 end
 
 function MoveAroundHelpers:PrintVersion()
-	print("|cffFFC125MoveAround:|r Version " .. GetAddOnMetadata("MoveAround", "Version"))
+	print("|cffFFC125MoveAround:|r Version " .. C_AddOns.GetAddOnMetadata("MoveAround", "Version"))
 end
 
 function MoveAroundHelpers:HandleSlashCommands(msg, editBox)

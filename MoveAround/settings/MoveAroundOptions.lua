@@ -334,7 +334,7 @@ function MoveAroundHelpers:SetupConfig()
 
 	local MoveAroundOptionsVersionContent = MoveAroundOptionsPanel.optionspanel:CreateFontString(nil, "BACKGROUND")
 	MoveAroundOptionsVersionContent:SetFontObject("GameFontHighlight")
-	MoveAroundOptionsVersionContent:SetText(GetAddOnMetadata("MoveAround", "Version"))
+	MoveAroundOptionsVersionContent:SetText(C_AddOns.GetAddOnMetadata("MoveAround", "Version"))
 	MoveAroundOptionsVersionContent:SetJustifyH("LEFT")
 	MoveAroundOptionsVersionContent:SetPoint("BOTTOMLEFT", MoveAroundOptionsPanel.optionspanel, "BOTTOMLEFT", 70, 30)
 
