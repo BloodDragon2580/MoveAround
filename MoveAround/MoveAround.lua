@@ -396,9 +396,6 @@ local frames = {
 	["GarrisonLandingPageMinimapButton"] = {
 		MoveAroundDisabledBy = "buttonsDisabled",
 	},
-	["ExpansionLandingPageMinimapButton"] = {
-		MoveAroundDisabledBy = "buttonsDisabled",
-	},
 	["OrderHallMissionFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
 	},
