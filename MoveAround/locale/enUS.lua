@@ -32,7 +32,7 @@ L["/MoveAround reset - Reset position for all modified frames."] = "|cffd6266c/M
 
 L["MoveAround: Modifies default UI frames so you can click and drag to move. "] = "|cffd6266c/MoveAround:|r Modifies default UI frames so you can click and drag to move. "
 L["Left-click and drag anywhere to move a frame. "] = "Left-click + Shift and drag anywhere to move a frame. "
-L["Right-click and drag up or down to scale a frame."] = "Right-click and drag up or down to scale a frame."
+L["Right-click and drag up or down to scale a frame. "] = "Right-click and drag up or down to scale a frame."
 L["Position for each frame are saved. "] = "Position for each frame are saved. "
 L["For additional configuration options, visit "] = "For additional configuration options, visit "
 L[" -> AddOns -> MoveAround."] = " -> AddOns -> MoveAround."
