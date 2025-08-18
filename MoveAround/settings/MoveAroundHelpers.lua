@@ -501,34 +501,75 @@ function MoveAroundHelpers:ModifyFrames(frames)
 	end
 end
 
+-- Allgemeine Funktion, die ein einzelnes Frame prepariert (wird von FixBags verwendet)
+function MoveAroundHelpers:ModifyFrame(frameOrName, properties)
+    local frame = nil
+    if type(frameOrName) == "string" then
+        frame = getFrame(frameOrName)
+    else
+        frame = frameOrName
+    end
+
+    if not frame then
+        return
+    end
+
+    -- Wenn bereits modifiziert, nichts tun
+    if frame.isModified then
+        return
+    end
+
+    -- Falls properties ein String ist (z.B. "bags"), ignoriere oder handle speziell falls nötig
+    if type(properties) == "table" then
+        if properties.MoveAroundUnscalable then
+            frame.MoveAroundUnscalable = true
+        end
+        if properties.MoveAroundUnmovable then
+            frame.MoveAroundUnmovable = true
+        end
+        if properties.MoveAroundHasMover then
+            frame.MoveAroundHasMover = true
+        end
+        if properties.MoveAroundDelegate then
+            frame.MoveAroundDelegate = getFrame(properties.MoveAroundDelegate) or frame
+        end
+    end
+
+    -- makeModifiable und hookSet sind lokale Funktionen (im selben File) — wir benutzen sie hier
+    makeModifiable(frame)
+    hookSet(frame)
+
+    -- Markiere das Frame als bearbeitet, damit künftige Aufrufe es überspringen
+    frame.isModified = true
+
+    -- Position/Scale sofort zurücksetzen (optional, aber sinnvoll)
+    resetScaleAndPosition(frame)
+end
+
 function MoveAroundHelpers:FixBags()
-	if hasFixedBags then
-		return
-	end
+    local hasFixedBags = false
 
-	for i=1,TOTAL_BAGS do
-		_G["ContainerFrame"..i]:HookScript(
-			"OnHide",
-			function(self, event, ...)
-				if (not MoveAroundHelpers:IsAnyBagShown()) then
-					MoveAroundHelpers:RevertBags()
-				end
-			end
-		)
-	end
+    -- Falls kombinierte Taschen aktiviert sind
+    if GetCVarBool("combinedBags") then
+        local frame = _G["ContainerFrameCombinedBags"]
+        if frame and not frame.isModified then
+            self:ModifyFrame(frame, "bags")
+            hasFixedBags = true
+        end
+    else
+        -- Klassische einzelnen Taschen-Frames
+        for i = 1, NUM_CONTAINER_FRAMES do
+            local frame = _G["ContainerFrame"..i]
+            if frame and not frame.isModified then
+                self:ModifyFrame(frame, "bags")
+                hasFixedBags = true
+            end
+        end
+    end
 
-	if (ContainerFrameCombinedBags) then
-		ContainerFrameCombinedBags:HookScript(
-			"OnHide",
-			function(self, event, ...)
-				if (not MoveAroundHelpers:IsAnyBagShown()) then
-					MoveAroundHelpers:RevertBags()
-				end
-			end
-		)
-	end
-
-	hasFixedBags = true
+    if not hasFixedBags then
+        self.waitTable["bags"] = true
+    end
 end
 
 function MoveAroundHelpers:FixPlayerChoiceFrame()
