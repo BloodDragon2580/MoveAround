@@ -520,6 +520,12 @@ local frames = {
 	["ProfessionsBookFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
 	},
+	["TransmogFrame"] = {
+		MoveAroundDisabledBy = "windowsDisabled",
+	},
+	["TransmogrifyFrame"] = {
+		MoveAroundDisabledBy = "windowsDisabled",
+	},
 	["PlayerSpellsFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
 	}
