@@ -507,9 +507,11 @@ local frames = {
 	["GenericTraitFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
 	},
+	["QuestObjectiveTracker"] = {
+		MoveAroundDisabledBy = "windowsDisabled",
+	},
 	["ObjectiveTrackerFrame"] = {
 		MoveAroundDisabledBy = "objectivesDisabled",
-		MoveAroundUnmovable = true
 	},
 	["ProfessionsCustomerOrdersFrame"] = {
 		MoveAroundDisabledBy = "windowsDisabled",
